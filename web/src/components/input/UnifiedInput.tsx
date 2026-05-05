@@ -33,7 +33,7 @@ export function UnifiedInput({
   isLoading,
   isStreaming = false,
   disabled = false,
-  placeholder = 'Message Jarvis...',
+  placeholder = 'Message Mike...',
 }: UnifiedInputProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)

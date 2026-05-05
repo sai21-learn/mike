@@ -1,8 +1,15 @@
 {
-  "people": {},
+  "people": {
+    "sooraj": {
+      "name": "Sooraj",
+      "role": "student",
+      "skills": ["python", "machine learning", "deep learning", "data science"],
+      "interests": ["artificial intelligence", "machine learning", "deep learning", "data science", "natural language processing", "computer vision"]
+    }
+  },
   "projects": {
-    "jarvis": {
-      "name": "Jarvis",
+    "mike": {
+      "name": "Mike",
       "description": "Personal AI assistant",
       "status": "building",
       "tech": ["python", "ollama", "chromadb"],

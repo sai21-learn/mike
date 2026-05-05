@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.png" alt="Jarvis" />
+  <img src="assets/banner.png" alt="Mike" />
 </p>
 
 <p align="center">
@@ -29,7 +29,7 @@
 - **Fact Extraction**: Automatically learns facts about you from conversations
 - **Memory System**: Persistent SQLite storage with working memory and auto-compaction
 - **Personas**: Switch between assistant modes (default, coder, researcher, creative, planner)
-- **Dynamic Skills**: Create new tools at runtime - Jarvis can build its own skills
+- **Dynamic Skills**: Create new tools at runtime - Mike can build its own skills
 - **Multi-Model Analysis**: Run queries through multiple AI models simultaneously and combine insights
 - **Web UI**: Modern dark glass-card interface with real-time WebSocket communication
 - **Light & Dark Mode**: Theme toggle with localStorage persistence and OS preference detection
@@ -41,29 +41,19 @@
 - **Strong Identity System**: Stays in character regardless of underlying model, per-user personalization
 - **Telegram Bot**: Full-featured Telegram integration with 20+ commands
 - **Authentication**: Optional email/password login with session management, CLI user management
-- **Project Context**: Auto-detects project type and loads JARVIS.md/CLAUDE.md instructions
+- **Project Context**: Auto-detects project type and loads MIKE.md/CLAUDE.md instructions
 
 ## Requirements
 
-- **Python 3.10, 3.11, or 3.12** (3.13+ not yet supported due to dependency compatibility)
+- **Python 3.10 to 3.13+** (Fully tested on 3.13)
 - [Ollama](https://ollama.ai) installed and running
-- **Node.js 18+** (required for Web UI)
+- [uv](https://github.com/astral-sh/uv) (Highly recommended for 10x faster installation)
+- **Node.js 18+** (Required for Web UI)
 - 16GB RAM recommended
 
-### Check Your Python Version
-
 ```bash
+# Verify your version
 python3 --version
-```
-
-If you have Python 3.13 or 3.14, install a compatible version:
-
-```bash
-# macOS with Homebrew
-brew install python@3.12
-
-# Then use this Python for installation
-/opt/homebrew/bin/python3.12 --version
 ```
 
 ## Installation
@@ -71,57 +61,50 @@ brew install python@3.12
 ### Quick Install (Recommended)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rezaulhreza/jarvis/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/sai21-learn/mike/main/install.sh | bash
 ```
 
-> **Note:** If the script detects Python 3.13+, it will fail during dependency installation. See [Troubleshooting](#troubleshooting) below.
+> **Note:** The script automatically detects `uv` for a faster setup. If not found, it falls back to standard `pip/venv`.
 
 ### Manual Installation (If Quick Install Fails)
 
-If you have Python 3.13+ or encounter dependency conflicts:
+If you prefer `uv` (recommended):
 
 ```bash
-# 1. Install Python 3.12 (macOS)
-brew install python@3.12
+# 1. Clone and setup
+git clone https://github.com/sai21-learn/mike.git ~/.mike
+cd ~/.mike/src
 
-# 2. Clone the repository
-git clone https://github.com/rezaulhreza/jarvis.git ~/.jarvis
-
-# 3. Create virtual environment with Python 3.12
-cd ~/.jarvis/src
-/opt/homebrew/bin/python3.12 -m venv ../venv
-
-# 4. Activate and install
+# 2. Create environment and install
+uv venv ../venv --python 3.13
 source ../venv/bin/activate
-pip install -e ".[ui]"
-pip install python-multipart
+uv pip install -e ".[all]"
 
-# 5. Add alias for easy access (optional)
-echo 'alias jarvis="~/.jarvis/venv/bin/jarvis"' >> ~/.zshrc
-source ~/.zshrc
+# 3. Use Mike!
+mike --version
 ```
 
 ### Using pip
 
 ```bash
 # Basic installation
-pip install jarvis-ai-assistant
+pip install mike-ai-assistant
 
 # With UI support
-pip install jarvis-ai-assistant[ui]
+pip install mike-ai-assistant[ui]
 
 # With voice support
-pip install jarvis-ai-assistant[voice]
+pip install mike-ai-assistant[voice]
 
 # Everything
-pip install jarvis-ai-assistant[all]
+pip install mike-ai-assistant[all]
 ```
 
 ### From Source
 
 ```bash
-git clone https://github.com/rezaulhreza/jarvis.git
-cd jarvis
+git clone https://github.com/sai21-learn/mike.git
+cd mike
 python3.12 -m venv venv
 source venv/bin/activate
 pip install -e ".[ui]"
@@ -132,33 +115,32 @@ pip install python-multipart
 
 ```bash
 # Required for chat
-ollama pull llama3.2          # Fast chat model
-ollama pull qwen3:4b          # General purpose
+ollama pull qwen2.5:3b        # Fast & capable
+ollama pull llama3.2          # Modern small model
 
 # Required for RAG (knowledge base)
 ollama pull nomic-embed-text  # Text embeddings
 
 # Optional
-ollama pull deepseek-r1:8b    # Deep reasoning (thinking model)
-ollama pull qwen2.5-coder:7b  # Code generation
+ollama pull deepseek-v2.5     # Advanced reasoning
 ollama pull llava             # Image understanding (vision)
 ollama pull llama3.2-vision   # Better vision model
 ```
 
 ### Web UI Setup (Additional Steps)
 
-The Web UI requires Node.js. If `jarvis --dev` shows `vite: command not found`:
+The Web UI requires Node.js. If `mike --dev` shows `vite: command not found`:
 
 ```bash
 # 1. Install Node.js (macOS)
 brew install node
 
 # 2. Install frontend dependencies
-cd ~/.jarvis/web
+cd ~/.mike/web
 npm install
 
 # 3. Now run the dev server
-jarvis --dev
+mike --dev
 ```
 
 ## Usage
@@ -166,32 +148,32 @@ jarvis --dev
 ### CLI Mode (Default)
 
 ```bash
-jarvis                 # Interactive mode
-jarvis --fast          # Use fast reasoning level
-jarvis --deep          # Use deep reasoning level
-jarvis --level balanced  # Explicit reasoning level
+mike                 # Interactive mode
+mike --fast          # Use fast reasoning level
+mike --deep          # Use deep reasoning level
+mike --level balanced  # Explicit reasoning level
 ```
 
 ### Web UI
 
 ```bash
-jarvis --dev
+mike --dev
 # Opens at http://localhost:7777 (backend) and http://localhost:3000 (frontend)
 ```
 
 ### Voice Mode
 
 ```bash
-jarvis --voice
-# Requires: pip install jarvis-ai-assistant[voice]
+mike --voice
+# Requires: pip install mike-ai-assistant[voice]
 ```
 
 ### Single Query
 
 ```bash
-jarvis chat "What's the weather in London?"
-jarvis chat "Explain recursion" --deep
-jarvis chat "What time is it?" --fast
+mike chat "What's the weather in London?"
+mike chat "Explain recursion" --deep
+mike chat "What time is it?" --fast
 ```
 
 ### Telegram Bot
@@ -200,14 +182,14 @@ Full-featured Telegram integration with all capabilities:
 
 ```bash
 # Interactive setup wizard
-jarvis telegram setup
+mike telegram setup
 
 # Or manual setup:
-jarvis config set telegram bot_token YOUR_BOT_TOKEN
-jarvis telegram webhook https://your-domain.com  # Set webhook (recommended)
+mike config set telegram bot_token YOUR_BOT_TOKEN
+mike telegram webhook https://your-domain.com  # Set webhook (recommended)
 
 # Now just run your server - Telegram works automatically!
-jarvis --dev
+mike --dev
 ```
 
 **Telegram Commands:**
@@ -232,24 +214,24 @@ Plus all regular chat capabilities - web search, tool execution, RAG, etc.
 ### Other Commands
 
 ```bash
-jarvis --help      # Show all options
-jarvis setup       # Run setup wizard
-jarvis models      # List Ollama models
-jarvis personas    # List personas
-jarvis --daemon    # Run as background daemon
+mike --help      # Show all options
+mike setup       # Run setup wizard
+mike models      # List Ollama models
+mike personas    # List personas
+mike --daemon    # Run as background daemon
 
 # User management (when auth enabled)
-jarvis user create     # Create user account
-jarvis user list       # List users
-jarvis user passwd     # Reset password
-jarvis user rename     # Change display name
-jarvis user email      # Change email
-jarvis user delete     # Delete user
+mike user create     # Create user account
+mike user list       # List users
+mike user passwd     # Reset password
+mike user rename     # Change display name
+mike user email      # Change email
+mike user delete     # Delete user
 ```
 
 ## Web UI Features
 
-The web UI (`jarvis --dev`) includes:
+The web UI (`mike --dev`) includes:
 
 - **Dark Glass UI**: Glass-card design with backdrop blur, iridescent orb, and gradient accents
 - **Light & Dark Mode**: One-click theme toggle, persists across sessions, respects OS preference
@@ -291,7 +273,7 @@ Inside the interactive CLI:
 | `/level` | Show/set reasoning level |
 | `/clear` | Clear conversation |
 | `/cls` | Clear screen |
-| `/init` | Create JARVIS.md project config |
+| `/init` | Create MIKE.md project config |
 | `/history` | Show recent history |
 | `/quit` | Exit |
 
@@ -299,7 +281,7 @@ Inside the interactive CLI:
 
 ### Intent Classification System
 
-Jarvis uses an LLM-based intent classifier that replaces hardcoded keyword matching:
+Mike uses an LLM-based intent classifier that replaces hardcoded keyword matching:
 
 ```
 User Message → Intent Classifier → Route to appropriate handler
@@ -314,7 +296,7 @@ User Message → Intent Classifier → Route to appropriate handler
 
 ### Smart Auto-Tools
 
-Jarvis automatically detects when to use tools without being asked:
+Mike automatically detects when to use tools without being asked:
 
 - **Current events**: "Who is the president?" → auto web search
 - **Prices**: "What's the gold price?" → auto GoldAPI lookup
@@ -327,9 +309,9 @@ Jarvis automatically detects when to use tools without being asked:
 Context-aware commands also work:
 ```
 You: Tell me about the Mars mission
-Jarvis: [answers from knowledge]
+Mike: [answers from knowledge]
 You: search the web
-Jarvis: [searches for "Mars mission" using previous context]
+Mike: [searches for "Mars mission" using previous context]
 ```
 
 ### Provider System
@@ -420,7 +402,7 @@ Jarvis: [searches for "Mars mission" using previous context]
 
 ## Knowledge Base (RAG)
 
-Jarvis includes a RAG (Retrieval Augmented Generation) system that lets you feed it your own documents. When you ask questions, Jarvis searches your knowledge base and uses relevant information to give accurate, personalized answers.
+Mike includes a RAG (Retrieval Augmented Generation) system that lets you feed it your own documents. When you ask questions, Mike searches your knowledge base and uses relevant information to give accurate, personalized answers.
 
 ### How It Works
 
@@ -440,37 +422,37 @@ Your Question → Embed Query → Vector Search (20 candidates) → Cross-Encode
 ollama pull nomic-embed-text
 
 # Add a document
-jarvis knowledge add ~/Documents/my_resume.pdf
+mike knowledge add ~/Documents/my_resume.pdf
 
 # Add a folder of documents
-jarvis knowledge add ~/Documents/work/ --recursive
+mike knowledge add ~/Documents/work/ --recursive
 
 # Sync all configured sources
-jarvis knowledge sync --personal
+mike knowledge sync --personal
 ```
 
 ### Knowledge Commands
 
 | Command | Description |
 |---------|-------------|
-| `jarvis knowledge add <file>` | Add a file (PDF, TXT, MD) |
-| `jarvis knowledge add <dir> -r` | Add directory recursively |
-| `jarvis knowledge list` | List all sources and chunk counts |
-| `jarvis knowledge search <query>` | Test semantic search |
-| `jarvis knowledge remove <source>` | Remove a source |
-| `jarvis knowledge clear` | Clear entire knowledge base |
-| `jarvis knowledge sync` | Sync docs/ folder |
-| `jarvis knowledge sync --personal` | Also sync ~/.jarvis/knowledge/personal/ |
-| `jarvis knowledge sync --projects` | Also sync project READMEs from ~/Developer/ |
+| `mike knowledge add <file>` | Add a file (PDF, TXT, MD) |
+| `mike knowledge add <dir> -r` | Add directory recursively |
+| `mike knowledge list` | List all sources and chunk counts |
+| `mike knowledge search <query>` | Test semantic search |
+| `mike knowledge remove <source>` | Remove a source |
+| `mike knowledge clear` | Clear entire knowledge base |
+| `mike knowledge sync` | Sync docs/ folder |
+| `mike knowledge sync --personal` | Also sync ~/.mike/knowledge/personal/ |
+| `mike knowledge sync --projects` | Also sync project READMEs from ~/Developer/ |
 
 ### Personal Knowledge (Private)
 
 Store personal information outside of git:
 
 ```bash
-mkdir -p ~/.jarvis/knowledge/personal
-cp ~/Documents/notes.md ~/.jarvis/knowledge/personal/
-jarvis knowledge sync --personal
+mkdir -p ~/.mike/knowledge/personal
+cp ~/Documents/notes.md ~/.mike/knowledge/personal/
+mike knowledge sync --personal
 ```
 
 ### Supported File Types
@@ -483,7 +465,7 @@ jarvis knowledge sync --personal
 
 ### Configuration
 
-In `~/.jarvis/config/settings.yaml`:
+In `~/.mike/config/settings.yaml`:
 
 ```yaml
 memory:
@@ -499,7 +481,7 @@ models:
 
 ## Multi-Provider Support
 
-Jarvis supports multiple LLM providers. Configure in `~/.jarvis/config/settings.yaml`:
+Mike supports multiple LLM providers. Configure in `~/.mike/config/settings.yaml`:
 
 ```yaml
 # Default provider
@@ -532,10 +514,10 @@ Switch providers at runtime:
 
 ## Configuration
 
-Configuration is stored in `~/.jarvis/`:
+Configuration is stored in `~/.mike/`:
 
 ```
-~/.jarvis/
+~/.mike/
 ├── config/
 │   ├── settings.yaml     # Main config (models, providers, integrations)
 │   ├── rules.md          # Safety rules
@@ -543,7 +525,7 @@ Configuration is stored in `~/.jarvis/`:
 ├── memory/
 │   ├── facts.md          # Learned facts about user
 │   ├── entities.json     # Tracked entities
-│   └── jarvis.db         # SQLite conversation history
+│   └── mike.db         # SQLite conversation history
 ├── knowledge/
 │   ├── personal/         # Personal docs (outside git)
 │   └── notes/            # Quick notes
@@ -580,7 +562,7 @@ ELEVEN_LABS_API_KEY=your_key    # ElevenLabs TTS
 TELEGRAM_BOT_TOKEN=your_token
 
 # Authentication (optional)
-JARVIS_AUTH_ENABLED=false             # Enable login (manage users via: jarvis user create)
+MIKE_AUTH_ENABLED=false             # Enable login (manage users via: mike user create)
 
 # Vector DB (optional - defaults to ChromaDB local)
 QDRANT_URL=your_url             # Qdrant cloud URL
@@ -591,7 +573,7 @@ QDRANT_API_KEY=your_key         # Qdrant API key
 
 ### Assistant Name
 
-The assistant name is configurable (not hardcoded as "Jarvis"):
+The assistant name is configurable (not hardcoded as "Mike"):
 
 ```bash
 # Via Telegram
@@ -610,24 +592,24 @@ assistant:
 - **creative**: Brainstorming partner
 - **planner**: Productivity coach
 
-Switch with `/persona coder` or `jarvis persona coder`.
+Switch with `/persona coder` or `mike persona coder`.
 
 ### Project Context
 
-Jarvis auto-detects your project type and loads project-specific instructions:
+Mike auto-detects your project type and loads project-specific instructions:
 
 ```bash
-# Create a JARVIS.md in any project root
-echo "Always use TypeScript. Prefer functional components." > JARVIS.md
+# Create a MIKE.md in any project root
+echo "Always use TypeScript. Prefer functional components." > MIKE.md
 
-# Also supports: .jarvis/soul.md, .jarvis/instructions.md, CLAUDE.md
+# Also supports: .mike/soul.md, .mike/instructions.md, CLAUDE.md
 ```
 
 Detected project types: Python, Node.js, PHP/Laravel, Rust, Go
 
 ### Adding Custom Skills
 
-Create `~/.jarvis/skills/my_skill.py`:
+Create `~/.mike/skills/my_skill.py`:
 
 ```python
 def my_function(param: str) -> dict:
@@ -635,15 +617,15 @@ def my_function(param: str) -> dict:
     return {"success": True, "result": "..."}
 ```
 
-Or let Jarvis create them dynamically:
+Or let Mike create them dynamically:
 ```
 You: Create a skill that fetches stock prices
-Jarvis: [creates ~/.jarvis/skills/fetch_stock_price.py]
+Mike: [creates ~/.mike/skills/fetch_stock_price.py]
 ```
 
 ## Authentication (Optional)
 
-Jarvis supports optional email/password authentication with session-based login. User management is done entirely via CLI.
+Mike supports optional email/password authentication with session-based login. User management is done entirely via CLI.
 
 ### Setup
 
@@ -652,7 +634,7 @@ Jarvis supports optional email/password authentication with session-based login.
 pip install -e ".[auth]"
 
 # Enable auth
-export JARVIS_AUTH_ENABLED=true
+export MIKE_AUTH_ENABLED=true
 ```
 
 ### User Management (CLI)
@@ -661,40 +643,36 @@ All user operations are handled through the command line:
 
 ```bash
 # Create a user account
-jarvis user create
-jarvis user create -e user@example.com -p secret -n "John"
+mike user create
+mike user create -e user@example.com -p secret -n "John"
 
 # List all users
-jarvis user list
+mike user list
 
 # Reset a user's password
-jarvis user passwd user@example.com
+mike user passwd user@example.com
 
 # Change display name
-jarvis user rename user@example.com -n "New Name"
+mike user rename user@example.com -n "New Name"
 
 # Change email address
-jarvis user email old@example.com -e new@example.com
+mike user email old@example.com -e new@example.com
 
 # Delete a user
-jarvis user delete user@example.com
+mike user delete user@example.com
 ```
 
 Users are created with email verified. No email/SMTP setup required.
 
 ## Troubleshooting
 
-### `ResolutionImpossible` or dependency conflicts
+### Dependency conflicts
 
-This usually means your Python version is too new (3.13+). Install Python 3.12:
+If you encounter installation issues, we recommend using `uv` which resolves conflicts much better than standard `pip`:
 
 ```bash
-brew install python@3.12
-cd ~/.jarvis/src
-/opt/homebrew/bin/python3.12 -m venv ../venv --clear
-source ../venv/bin/activate
-pip install -e ".[ui]"
-pip install python-multipart
+pip install uv
+uv pip install -e ".[all]"
 ```
 
 ### `vite: command not found`
@@ -703,26 +681,26 @@ Node.js and frontend dependencies are missing:
 
 ```bash
 brew install node
-cd ~/.jarvis/web
+cd ~/.mike/web
 npm install
 ```
 
 ### `python-multipart` error
 
 ```bash
-source ~/.jarvis/venv/bin/activate
+source ~/.mike/venv/bin/activate
 pip install python-multipart
 ```
 
-### `jarvis: command not found`
+### `mike: command not found`
 
 ```bash
 # Option 1: Activate venv first
-source ~/.jarvis/venv/bin/activate
-jarvis
+source ~/.mike/venv/bin/activate
+mike
 
 # Option 2: Add alias
-echo 'alias jarvis="~/.jarvis/venv/bin/jarvis"' >> ~/.zshrc
+echo 'alias mike="~/.mike/venv/bin/mike"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
@@ -732,15 +710,15 @@ Make sure both ports are accessible:
 - Backend: http://localhost:7777
 - Frontend: http://localhost:3000
 
-Check that `npm install` completed successfully in `~/.jarvis/web`.
+Check that `npm install` completed successfully in `~/.mike/web`.
 
 ## Development
 
 ### Setup
 
 ```bash
-git clone https://github.com/rezaulhreza/jarvis.git
-cd jarvis
+git clone https://github.com/sai21-learn/mike.git
+cd mike
 
 # Python backend (use Python 3.10-3.12)
 python3.12 -m venv venv
@@ -757,7 +735,7 @@ cd ..
 ### Running in Dev Mode
 
 ```bash
-jarvis --dev
+mike --dev
 # Backend at http://localhost:7777
 # Frontend at http://localhost:3000 (with hot reload)
 ```
@@ -765,10 +743,10 @@ jarvis --dev
 ### Project Structure
 
 ```
-jarvis/
-├── jarvis/                  # Python backend (~6,000 lines)
+mike/
+├── mike/                  # Python backend (~6,000 lines)
 │   ├── __init__.py          # Package init, version, data dirs
-│   ├── assistant.py         # Main Jarvis class, ProjectContext
+│   ├── assistant.py         # Main Mike class, ProjectContext
 │   ├── cli.py               # Click CLI entry point
 │   ├── core/                # Core engine
 │   │   ├── agent.py         # Agentic loop with tool calling

@@ -1,4 +1,4 @@
-// Shared TypeScript types for Jarvis UI
+// Shared TypeScript types for Mike UI
 
 // === Message Types ===
 export interface ToolEvent {

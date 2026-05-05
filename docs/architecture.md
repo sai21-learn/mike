@@ -1,12 +1,12 @@
-# Jarvis Architecture & Core Concepts
+# Mike Architecture & Core Concepts
 
 ## Overview
-Jarvis is a local AI assistant that runs entirely on your machine. It uses Ollama for LLM inference, ChromaDB for vector storage, and provides both CLI and Web UI interfaces.
+Mike is a local AI assistant that runs entirely on your machine. It uses Ollama for LLM inference, ChromaDB for vector storage, and provides both CLI and Web UI interfaces.
 
 ## Core Components
 
 ### 1. LLM Provider (Ollama)
-- **Location**: `jarvis/providers/ollama.py`
+- **Location**: `mike/providers/ollama.py`
 - **Purpose**: Interface with local Ollama models
 - **Features**:
   - Chat completions with streaming
@@ -15,7 +15,7 @@ Jarvis is a local AI assistant that runs entirely on your machine. It uses Ollam
   - Tool/function calling support
 
 ### 2. RAG System (Retrieval Augmented Generation)
-- **Location**: `jarvis/knowledge/rag.py`
+- **Location**: `mike/knowledge/rag.py`
 - **Purpose**: Give the AI access to your documents and knowledge
 
 #### How RAG Works:
@@ -34,14 +34,14 @@ Jarvis is a local AI assistant that runs entirely on your machine. It uses Ollam
 
 #### CLI Commands:
 ```bash
-jarvis knowledge add <file>      # Add document
-jarvis knowledge list            # List sources
-jarvis knowledge search <query>  # Semantic search
-jarvis knowledge sync            # Sync all documents
+mike knowledge add <file>      # Add document
+mike knowledge list            # List sources
+mike knowledge search <query>  # Semantic search
+mike knowledge sync            # Sync all documents
 ```
 
 ### 3. Agent System
-- **Location**: `jarvis/agent/`
+- **Location**: `mike/agent/`
 - **Purpose**: Execute multi-step tasks using tools
 
 #### How Agents Work:
@@ -60,7 +60,7 @@ Tools are functions the AI can invoke. Example tools:
 - `quick_note`: Save notes
 
 ### 4. Context Management
-- **Location**: `jarvis/memory/context.py`
+- **Location**: `mike/memory/context.py`
 - **Purpose**: Manage conversation history
 
 #### Features:
@@ -105,7 +105,7 @@ User Input → Agent → Tool Selection → Tool Execution → Agent → Respons
 
 ## Configuration
 
-### Settings File: `~/.jarvis/config/settings.yaml`
+### Settings File: `~/.mike/config/settings.yaml`
 ```yaml
 models:
   default: qwen3:4b      # Main model
@@ -115,7 +115,7 @@ models:
 
 memory:
   vector_store: knowledge/chroma_db
-  database: memory/jarvis.db
+  database: memory/mike.db
 
 voice:
   tts_provider: browser  # browser, edge, elevenlabs
@@ -130,8 +130,8 @@ ELEVEN_LABS_API_KEY=sk_...  # For premium TTS
 ## Key Directories
 
 ```
-jarvis/
-├── jarvis/              # Python backend
+mike/
+├── mike/              # Python backend
 │   ├── agent/           # Agent system
 │   ├── knowledge/       # RAG system
 │   ├── memory/          # Context management
@@ -143,28 +143,28 @@ jarvis/
 ├── memory/              # Conversation DB
 └── docs/                # Documentation
 
-~/.jarvis/               # User data (outside git)
+~/.mike/               # User data (outside git)
 ├── config/              # User settings
 ├── context.db           # Conversation history
 └── knowledge/           # Personal documents
     └── personal/        # Your private docs
 ```
 
-## Extending Jarvis
+## Extending Mike
 
 ### Adding a New Tool
-1. Create function in `jarvis/skills/`
-2. Register in `jarvis/skills/__init__.py`
+1. Create function in `mike/skills/`
+2. Register in `mike/skills/__init__.py`
 3. Add to agent's tool list
 
 ### Adding Documents to RAG
 ```bash
 # Add to personal knowledge (not in git)
-cp mydoc.pdf ~/.jarvis/knowledge/personal/
-jarvis knowledge sync
+cp mydoc.pdf ~/.mike/knowledge/personal/
+mike knowledge sync
 
 # Or programmatically
-from jarvis.knowledge import get_rag_engine
+from mike.knowledge import get_rag_engine
 rag = get_rag_engine()
 rag.add_file("mydoc.pdf")
 ```

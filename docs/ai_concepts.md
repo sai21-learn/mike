@@ -1,4 +1,4 @@
-# AI & LLM Concepts for Jarvis
+# AI & LLM Concepts for Mike
 
 ## Large Language Models (LLMs)
 
@@ -173,7 +173,7 @@ Strategies for long conversations:
 A database optimized for storing and searching high-dimensional vectors (embeddings).
 
 ### ChromaDB
-The vector store used in Jarvis:
+The vector store used in Mike:
 - Persistent storage
 - Fast similarity search
 - Metadata filtering

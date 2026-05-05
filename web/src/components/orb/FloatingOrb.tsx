@@ -107,8 +107,8 @@ export function FloatingOrb({ state, volume, isStreaming, onClick }: FloatingOrb
 
         {/* Avatar */}
         <img
-          src="/jarvis.jpeg"
-          alt="Jarvis"
+          src="/mike.jpeg"
+          alt="Mike"
           className={cn(
             'relative w-9 h-9 rounded-full object-cover',
             'transition-all duration-300',

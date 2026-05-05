@@ -4,8 +4,8 @@ import pytest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-from jarvis.core.agent import Agent
-from jarvis.core.permissions import PermissionManager
+from mike.core.agent import Agent
+from mike.core.permissions import PermissionManager
 
 
 # ──────────────────────────────────────────────

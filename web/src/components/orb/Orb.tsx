@@ -109,8 +109,8 @@ export function Orb({
       >
         {/* Avatar image */}
         <img
-          src="/jarvis.jpeg"
-          alt="Jarvis"
+          src="/mike.jpeg"
+          alt="Mike"
           className={cn(
             'rounded-full object-cover',
             'transition-all duration-300',

@@ -1,11 +1,11 @@
-# Jarvis Configuration
+# Mike Configuration
 # Secrets should be in .env file, not here!
 
-# User Profile (customize in ~/.jarvis/config/settings.yaml)
+# User Profile (customize in ~/.mike/config/settings.yaml)
 user:
   name: ""                  # Your full name
-  nickname: ""              # How Jarvis should address you (optional)
-  address_user: false       # Whether Jarvis should address you by name
+  nickname: ""              # How Mike should address you (optional)
+  address_user: false       # Whether Mike should address you by name
 
 # Model Settings
 models:
@@ -79,7 +79,7 @@ reasoning:
 
 # Memory Settings
 memory:
-  database: "memory/jarvis.db"
+  database: "memory/mike.db"
   vector_store: "knowledge/chroma_db"  # ChromaDB local path (fallback when Qdrant not configured)
   # Vector backend is auto-detected from env: QDRANT_URL + QDRANT_API_KEY → Qdrant, otherwise → ChromaDB
   rerank: true  # Enable cross-encoder reranking for better retrieval accuracy
@@ -169,11 +169,11 @@ voice:
   enabled: false
   stt_model: "whisper"
   tts_engine: "say"
-  wake_word: "jarvis"
+  wake_word: "mike"
 
 # Logging
 logging:
   level: "INFO"
-  file: "logs/jarvis.log"
+  file: "logs/mike.log"
   max_size_mb: 10
   backup_count: 3

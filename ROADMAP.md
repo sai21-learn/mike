@@ -1,7 +1,7 @@
-# Jarvis Roadmap
+# Mike Roadmap
 
 ## Vision
-Transform Jarvis into a fully autonomous AI life management platform with:
+Transform Mike into a fully autonomous AI life management platform with:
 - **Multi-model orchestration** - Auto-select best model per task with handover documents
 - **Multi-user support** - Customizable for any user, not hardcoded
 - **Enterprise security** - Authentication, encryption, audit logs
@@ -18,8 +18,8 @@ Transform Jarvis into a fully autonomous AI life management platform with:
 - [x] FastAPI WebSocket server for real-time communication
 - [x] Rich terminal UI with gradient banner and spinners
 - [x] SQLite-backed conversation history with chat sessions
-- [x] YAML-based configuration system (`~/.jarvis/config/settings.yaml`)
-- [x] Project context detection (JARVIS.md, CLAUDE.md, .jarvis/soul.md)
+- [x] YAML-based configuration system (`~/.mike/config/settings.yaml`)
+- [x] Project context detection (MIKE.md, CLAUDE.md, .mike/soul.md)
 - [x] Auto-detects project type (Python, Node.js, PHP, Rust, Go)
 - [x] Safety rules with destructive command confirmation
 
@@ -47,7 +47,7 @@ Transform Jarvis into a fully autonomous AI life management platform with:
 - [x] Cross-encoder reranking (ms-marco-MiniLM-L-6-v2)
 - [x] RAG integrated into both terminal and web chat loops
 - [x] Knowledge CLI commands: add, list, search, remove, clear, sync
-- [x] Personal knowledge directory (`~/.jarvis/knowledge/personal/`)
+- [x] Personal knowledge directory (`~/.mike/knowledge/personal/`)
 
 #### Web UI (React)
 - [x] React 19 + TypeScript + Tailwind CSS v4 + Vite
@@ -94,8 +94,8 @@ Transform Jarvis into a fully autonomous AI life management platform with:
 
 #### Fact Extraction
 - [x] LLM-based fact extraction from conversations
-- [x] Persistent storage in `~/.jarvis/memory/facts.md`
-- [x] Entity tracking in `~/.jarvis/memory/entities.json`
+- [x] Persistent storage in `~/.mike/memory/facts.md`
+- [x] Entity tracking in `~/.mike/memory/entities.json`
 - [x] Facts injected into system prompt for personalization
 
 ### Phase 3: Multimodal Support (2026-02-05)
@@ -126,13 +126,13 @@ Transform Jarvis into a fully autonomous AI life management platform with:
 
 #### Dynamic Skill Creation
 - [x] `skill_creator.py` - Create skills at runtime
-- [x] Save to `~/.jarvis/skills/` directory
+- [x] Save to `~/.mike/skills/` directory
 - [x] CRUD operations: create, update, delete, list, get code
 
 #### Voice System
 - [x] Multiple TTS providers: Browser, Edge TTS, ElevenLabs, Kokoro (Chutes)
 - [x] Multiple STT providers: Browser, Whisper (local), Chutes (cloud)
-- [x] Wake word detection (configurable, default: "jarvis")
+- [x] Wake word detection (configurable, default: "mike")
 - [x] Push-to-talk mode in web UI
 - [x] Voice control widget in dashboard
 
@@ -178,11 +178,11 @@ Transform Jarvis into a fully autonomous AI life management platform with:
 ### Phase 5: Developer Experience & Personalization (2026-02-07)
 
 #### Customizable Assistant Identity
-- [x] YAML frontmatter parsing in JARVIS.md for per-project assistant name
-- [x] Priority chain: project JARVIS.md > user config > default "Jarvis"
+- [x] YAML frontmatter parsing in MIKE.md for per-project assistant name
+- [x] Priority chain: project MIKE.md > user config > default "Mike"
 - [x] System prompt dynamically uses configured name
 - [x] Frontend receives assistant name via WebSocket connection message
-- [x] `/init` command generates JARVIS.md template with name frontmatter
+- [x] `/init` command generates MIKE.md template with name frontmatter
 
 #### Model Switch Context Preservation
 - [x] `context.set_provider()` called on model switch to update token budget
@@ -287,7 +287,7 @@ Transform Jarvis into a fully autonomous AI life management platform with:
 - [x] Session-based auth with httpOnly cookies (30-day expiry)
 - [x] CSRF protection (double-submit cookie pattern)
 - [x] Security headers middleware (X-Content-Type-Options, X-Frame-Options, etc.)
-- [x] CLI user management: `jarvis user create/list/delete/passwd/rename/email`
+- [x] CLI user management: `mike user create/list/delete/passwd/rename/email`
 - [x] Login-only UI (no registration, OAuth, or password reset exposed in UI)
 
 #### Per-User Isolation
@@ -430,7 +430,7 @@ Transform Jarvis into a fully autonomous AI life management platform with:
 - Added proportional context budget (adapts to any model size)
 - Added live tool status UI with spinners and durations
 - Added React.memo optimization for message rendering
-- Added customizable assistant name via JARVIS.md frontmatter
+- Added customizable assistant name via MIKE.md frontmatter
 - Added model/provider switch context preservation
 - Added auto-memory fact extraction in web UI (throttled, async)
 - Added memory management UI panel with CRUD API

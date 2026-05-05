@@ -566,7 +566,7 @@ function STTSettingsTab({
                 type="text"
                 value={editingWakeWord}
                 onChange={(e) => setEditingWakeWord(e.target.value.toLowerCase())}
-                placeholder="jarvis"
+                placeholder="mike"
                 className="flex-1 px-3 py-2 rounded-lg bg-surface-2 border border-border/30 text-sm text-text focus:outline-none focus:border-listening/50"
               />
               <button
@@ -582,7 +582,7 @@ function STTSettingsTab({
               </button>
             </div>
             <div className="text-xs text-text-muted mt-2">
-              Triggered by: "hey {editingWakeWord || 'jarvis'}", "{editingWakeWord || 'jarvis'}", "ok {editingWakeWord || 'jarvis'}"
+              Triggered by: "hey {editingWakeWord || 'mike'}", "{editingWakeWord || 'mike'}", "ok {editingWakeWord || 'mike'}"
             </div>
           </div>
         </div>
@@ -1051,7 +1051,7 @@ function CalendarIntegration() {
             <ol className="list-decimal list-inside mt-2 space-y-1">
               <li>Go to <a href="https://appleid.apple.com" target="_blank" rel="noopener" className="text-primary hover:underline">appleid.apple.com</a></li>
               <li>Sign in → App-Specific Passwords</li>
-              <li>Generate a password for "Jarvis"</li>
+              <li>Generate a password for "Mike"</li>
             </ol>
           </div>
         </div>

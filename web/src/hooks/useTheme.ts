@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 
 export type Theme = 'dark' | 'light'
 
-const STORAGE_KEY = 'jarvis_theme'
+const STORAGE_KEY = 'mike_theme'
 
 function getInitialTheme(): Theme {
   const stored = localStorage.getItem(STORAGE_KEY)

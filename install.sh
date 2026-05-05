@@ -1,13 +1,13 @@
 #!/bin/bash
 #
-# Jarvis Installer
-# Usage: curl -fsSL https://raw.githubusercontent.com/rezaulhreza/jarvis/main/install.sh | bash
+# Mike Installer - Local-first AI Assistant
+# Usage: curl -fsSL https://raw.githubusercontent.com/sai21-learn/mike/main/install.sh | bash
 #
 
 set -e
 
-REPO="rezaulhreza/jarvis"
-INSTALL_DIR="$HOME/.jarvis"
+REPO="sai21-learn/mike"
+INSTALL_DIR="$HOME/.mike"
 BIN_DIR="$HOME/.local/bin"
 
 # Colors
@@ -18,13 +18,13 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 echo -e "${BLUE}"
-echo "     _                  _"
-echo "    | | __ _ _ ____   _(_)___"
-echo " _  | |/ _\` | '__\\ \\ / / / __|"
-echo "| |_| | (_| | |   \\ V /| \\__ \\"
-echo " \\___/ \\__,_|_|    \\_/ |_|___/"
+echo "           _ _        "
+echo " _ __ ___ (_) | _____ "
+echo " | '_ \` _ \| | |/ / _ \\"
+echo " | | | | | | |   <  __/"
+echo " |_| |_| |_|_|_|\\_\\___|"
 echo -e "${NC}"
-echo "Local AI Assistant Installer"
+echo "Mike: Your Local AI Assistant"
 echo "=============================="
 echo
 
@@ -55,14 +55,14 @@ check_ollama() {
 
     echo -e "${YELLOW}!${NC} Ollama not found"
     echo "  Install from: https://ollama.ai"
-    echo "  Continuing anyway - you'll need it to run Jarvis"
+    echo "  Continuing anyway - you'll need it to run Mike"
     return 0
 }
 
-# Install Jarvis
-install_jarvis() {
+# Install Mike
+install_mike() {
     echo
-    echo "Installing Jarvis..."
+    echo "Installing Mike..."
 
     # Create directories
     mkdir -p "$INSTALL_DIR"
@@ -77,29 +77,41 @@ install_jarvis() {
             git clone "https://github.com/$REPO.git" "$INSTALL_DIR/src"
         fi
     else
-        echo "Downloading..."
+        echo "Downloading source..."
         curl -sL "https://github.com/$REPO/archive/main.tar.gz" | tar xz -C "$INSTALL_DIR"
-        mv "$INSTALL_DIR/jarvis-main" "$INSTALL_DIR/src"
+        rm -rf "$INSTALL_DIR/src"
+        mv "$INSTALL_DIR/mike-main" "$INSTALL_DIR/src"
     fi
 
-    # Create virtual environment
-    echo "Setting up Python environment..."
-    python3 -m venv "$INSTALL_DIR/venv"
-    source "$INSTALL_DIR/venv/bin/activate"
-
-    # Install package
-    pip install --upgrade pip > /dev/null
-    pip install -e "$INSTALL_DIR/src" > /dev/null
+    # Create environment
+    if command -v uv &> /dev/null; then
+        echo "Using 'uv' for environment setup..."
+        cd "$INSTALL_DIR/src"
+        uv venv "$INSTALL_DIR/venv" --python 3.13 || uv venv "$INSTALL_DIR/venv"
+        source "$INSTALL_DIR/venv/bin/activate"
+        uv pip install -e ".[all]"
+    else
+        echo "Setting up Python venv..."
+        python3 -m venv "$INSTALL_DIR/venv"
+        source "$INSTALL_DIR/venv/bin/activate"
+        pip install --upgrade pip
+        pip install -e "$INSTALL_DIR/src[all]"
+    fi
 
     # Create wrapper script
-    cat > "$BIN_DIR/jarvis" << 'WRAPPER'
+    cat > "$BIN_DIR/mike" << 'WRAPPER'
 #!/bin/bash
-source "$HOME/.jarvis/venv/bin/activate"
-python -m jarvis.cli "$@"
+if [ -f "$HOME/.mike/venv/bin/activate" ]; then
+    source "$HOME/.mike/venv/bin/activate"
+    python -m mike.cli "$@"
+else
+    echo "Mike environment not found. Please reinstall."
+    exit 1
+fi
 WRAPPER
-    chmod +x "$BIN_DIR/jarvis"
+    chmod +x "$BIN_DIR/mike"
 
-    echo -e "${GREEN}✓${NC} Jarvis installed"
+    echo -e "${GREEN}✓${NC} Mike installed successfully"
 }
 
 # Add to PATH if needed
@@ -118,9 +130,11 @@ setup_path() {
         fi
 
         if [ -n "$SHELL_RC" ]; then
-            echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$SHELL_RC"
-            echo -e "${GREEN}✓${NC} Added to $SHELL_RC"
-            echo -e "${YELLOW}!${NC} Run: source $SHELL_RC"
+            if ! grep -q "$BIN_DIR" "$SHELL_RC"; then
+                echo -e "\n# Mike Assistant\nexport PATH=\"$BIN_DIR:\$PATH\"" >> "$SHELL_RC"
+                echo -e "${GREEN}✓${NC} Added to $SHELL_RC"
+                echo -e "${YELLOW}!${NC} Run: source $SHELL_RC"
+            fi
         else
             echo -e "${YELLOW}!${NC} Add to your shell config: export PATH=\"\$HOME/.local/bin:\$PATH\""
         fi
@@ -130,17 +144,22 @@ setup_path() {
 # Download recommended models
 setup_models() {
     echo
-    read -p "Download recommended Ollama models? (y/n) " -n 1 -r
+    echo -e "${BLUE}Recommended Models:${NC}"
+    echo "  - qwen2.5:3b    (Fast, balanced)"
+    echo "  - llama3.2      (Modern, capable)"
+    echo "  - llava         (Vision support)"
+    echo
+    read -p "Download recommended Ollama models now? (y/n) " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         if command -v ollama &> /dev/null; then
-            echo "Downloading models (this may take a while)..."
-            ollama pull qwen3:4b || true
+            echo "Pulling models..."
+            ollama pull qwen2.5:3b || true
+            ollama pull llama3.2 || true
             ollama pull llava || true
-            ollama pull functiongemma || true
-            echo -e "${GREEN}✓${NC} Models downloaded"
+            echo -e "${GREEN}✓${NC} Models ready"
         else
-            echo -e "${YELLOW}!${NC} Ollama not available, skipping"
+            echo -e "${YELLOW}!${NC} Ollama not found, pull manually later: ollama pull qwen2.5:3b"
         fi
     fi
 }
@@ -149,19 +168,18 @@ setup_models() {
 main() {
     check_python
     check_ollama
-    install_jarvis
+    install_mike
     setup_path
     setup_models
 
     echo
     echo -e "${GREEN}Installation complete!${NC}"
     echo
-    echo "Usage:"
-    echo "  jarvis          # Start CLI"
-    echo "  jarvis --dev    # Start Web UI"
-    echo "  jarvis --help   # Show all options"
+    echo "Try it out:"
+    echo "  mike chat \"hello\""
+    echo "  mike --dev"
     echo
-    echo "If 'jarvis' command not found, restart your terminal."
+    echo "Full documentation: https://github.com/sai21-learn/mike"
 }
 
 main

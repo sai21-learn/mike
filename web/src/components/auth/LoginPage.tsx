@@ -33,7 +33,7 @@ export function LoginPage() {
       <div className="w-full max-w-sm space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <img src="/jarvis.jpeg" alt="Jarvis" className="w-16 h-16 rounded-2xl mx-auto" />
+          <img src="/mike.jpeg" alt="Mike" className="w-16 h-16 rounded-2xl mx-auto" />
           <h1 className="text-2xl font-bold">Welcome back</h1>
           <p className="text-text-muted text-sm">Sign in to your account</p>
         </div>

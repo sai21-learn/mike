@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 /** Read the CSRF token from the cookie set by the backend. */
 export function getCsrfToken(): string {
-  const match = document.cookie.match(/jarvis_csrf=([^;]+)/)
+  const match = document.cookie.match(/mike_csrf=([^;]+)/)
   return match ? match[1] : ''
 }
 

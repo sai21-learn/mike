@@ -51,7 +51,7 @@ function AppLayout() {
   const { theme, toggleTheme } = useTheme()
 
   // Assistant configuration (customizable name, etc.)
-  const [assistantName, setAssistantName] = useState('Jarvis')
+  const [assistantName, setAssistantName] = useState('Mike')
 
   // State
   const [mode, setMode] = useState<'chat' | 'voice'>('chat')
@@ -61,15 +61,15 @@ function AppLayout() {
   const [lastSpokenIndex, setLastSpokenIndex] = useState(-1)
   const [loadingText, setLoadingText] = useState('')
   const [wakeWordEnabled, setWakeWordEnabled] = useState(() => {
-    return localStorage.getItem('jarvis_wake_word_enabled') === 'true'
+    return localStorage.getItem('mike_wake_word_enabled') === 'true'
   })
   const [wakeWord, setWakeWord] = useState(() => {
-    return localStorage.getItem('jarvis_wake_word') || 'jarvis'
+    return localStorage.getItem('mike_wake_word') || 'mike'
   })
 
   // Sidebar state
   const [sidebarOpen, setSidebarOpen] = useState(() => {
-    const saved = localStorage.getItem('jarvis_sidebar_open')
+    const saved = localStorage.getItem('mike_sidebar_open')
     return saved !== null ? saved === 'true' : window.innerWidth >= 768
   })
 
@@ -219,7 +219,7 @@ function AppLayout() {
   // Persist wake word settings to both localStorage (fast) and backend (durable)
   const handleSetWakeWordEnabled = useCallback(async (enabled: boolean) => {
     setWakeWordEnabled(enabled)
-    localStorage.setItem('jarvis_wake_word_enabled', String(enabled))
+    localStorage.setItem('mike_wake_word_enabled', String(enabled))
     await apiFetch('/api/settings/voice', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -229,7 +229,7 @@ function AppLayout() {
 
   const handleSetWakeWord = useCallback(async (word: string) => {
     setWakeWord(word)
-    localStorage.setItem('jarvis_wake_word', word)
+    localStorage.setItem('mike_wake_word', word)
     await apiFetch('/api/settings/voice', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -285,11 +285,11 @@ function AppLayout() {
           if (data.stt_provider) setSttProvider(data.stt_provider)
           if (data.wake_word) {
             setWakeWord(data.wake_word)
-            localStorage.setItem('jarvis_wake_word', data.wake_word)
+            localStorage.setItem('mike_wake_word', data.wake_word)
           }
           if (data.wake_word_enabled !== undefined) {
             setWakeWordEnabled(data.wake_word_enabled)
-            localStorage.setItem('jarvis_wake_word_enabled', String(data.wake_word_enabled))
+            localStorage.setItem('mike_wake_word_enabled', String(data.wake_word_enabled))
           }
         }
         if (promptRes?.ok) {
@@ -477,7 +477,7 @@ function AppLayout() {
   const handleSidebarToggle = useCallback(() => {
     setSidebarOpen(prev => {
       const next = !prev
-      localStorage.setItem('jarvis_sidebar_open', String(next))
+      localStorage.setItem('mike_sidebar_open', String(next))
       return next
     })
   }, [])
@@ -509,7 +509,7 @@ function AppLayout() {
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               {!sidebarOpen && <div className="w-8" />} {/* Spacer for sidebar toggle button */}
               <div className="relative">
-                <img src="/jarvis.jpeg" alt={assistantName} className="w-7 h-7 rounded-lg" />
+                <img src="/mike.jpeg" alt={assistantName} className="w-7 h-7 rounded-lg" />
                 <div className={cn(
                   'absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full border-[1.5px] border-background',
                   connected ? 'bg-success' : 'bg-error'

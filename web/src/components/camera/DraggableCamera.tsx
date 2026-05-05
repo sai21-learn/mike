@@ -21,7 +21,7 @@ export function DraggableCamera({ isActive, videoRef, onClose }: DraggableCamera
     defaultSize: { width: 160, height: 120 },
     minSize: { width: 120, height: 90 },
     maxSize: { width: 480, height: 360 },
-    storageKey: 'jarvis_camera_position',
+    storageKey: 'mike_camera_position',
   })
 
   if (!isActive) return null

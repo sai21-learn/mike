@@ -1,4 +1,4 @@
-"""Tests for jarvis/core/permissions.py — PermissionManager."""
+"""Tests for mike/core/permissions.py — PermissionManager."""
 
 import pytest
 import tempfile
@@ -6,7 +6,7 @@ import yaml
 from pathlib import Path
 from unittest.mock import MagicMock
 
-from jarvis.core.permissions import PermissionManager, TOOL_RISK_LEVELS
+from mike.core.permissions import PermissionManager, TOOL_RISK_LEVELS
 
 
 # ──────────────────────────────────────────────

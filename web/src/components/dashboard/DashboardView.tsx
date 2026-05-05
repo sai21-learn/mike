@@ -111,7 +111,7 @@ export function DashboardView({
   viewMode,
 }: DashboardViewProps) {
   const orbState = getOrbState({ isPlaying, isLoading, isListening, isRecording })
-  const assistantName = assistantConfig.name || 'Jarvis'
+  const assistantName = assistantConfig.name || 'Mike'
 
   // Calendar state for desktop
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([])
@@ -445,7 +445,7 @@ function MobileDashboard({
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([])
   const [calendarConnected, setCalendarConnected] = useState(false)
   const [calendarLoading, setCalendarLoading] = useState(true)
-  const assistantName = assistantConfig.name || 'Jarvis'
+  const assistantName = assistantConfig.name || 'Mike'
 
   // Fetch calendar status and events
   useEffect(() => {

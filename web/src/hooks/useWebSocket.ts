@@ -95,7 +95,7 @@ export function useWebSocket() {
   const [model, setModel] = useState('')
   const [provider, setProvider] = useState('')
   const [project, setProject] = useState('')
-  const [assistantName, setAssistantName] = useState('Jarvis')
+  const [assistantName, setAssistantName] = useState('Mike')
   const [chatId, setChatId] = useState<string | null>(null)
   const [ragStatus, setRagStatus] = useState<RagInfo | null>(null)
   const [toolTimeline, setToolTimeline] = useState<ToolEvent[]>([])

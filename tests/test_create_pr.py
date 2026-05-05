@@ -4,7 +4,7 @@ import pytest
 from unittest.mock import patch, MagicMock
 from pathlib import Path
 
-from jarvis.core.tools import (
+from mike.core.tools import (
     create_pr, ALL_TOOLS, TOOL_REGISTRY,
     _TOOL_FUNC_TO_NAME, _CATEGORY_GROUPS,
 )
@@ -45,24 +45,24 @@ class TestCreatePRRegistration:
 class TestCreatePRInAgent:
 
     def test_in_known_tool_names(self):
-        from jarvis.core.agent import Agent
+        from mike.core.agent import Agent
         assert "create_pr" in Agent._KNOWN_TOOL_NAMES
 
     def test_format_tool_display(self):
-        from jarvis.core.agent import Agent
+        from mike.core.agent import Agent
         agent = MagicMock(spec=Agent)
         display = Agent._format_tool_display(agent, "create_pr", {"title": "Fix bug", "draft": False})
         assert "Create PR" in display
         assert "Fix bug" in display
 
     def test_format_tool_display_draft(self):
-        from jarvis.core.agent import Agent
+        from mike.core.agent import Agent
         agent = MagicMock(spec=Agent)
         display = Agent._format_tool_display(agent, "create_pr", {"title": "WIP", "draft": True})
         assert "(draft)" in display
 
     def test_validate_tool_call_requires_title(self):
-        from jarvis.core.agent import Agent
+        from mike.core.agent import Agent
         agent = MagicMock(spec=Agent)
         # Missing title
         valid, error = Agent._validate_tool_call(agent, "create_pr", {})
@@ -70,7 +70,7 @@ class TestCreatePRInAgent:
         assert "title" in error.lower()
 
     def test_validate_tool_call_valid(self):
-        from jarvis.core.agent import Agent
+        from mike.core.agent import Agent
         agent = MagicMock(spec=Agent)
         valid, error = Agent._validate_tool_call(agent, "create_pr", {"title": "Fix stuff"})
         assert valid is True
@@ -82,13 +82,13 @@ class TestCreatePRInAgent:
 
 class TestCreatePRExecution:
 
-    @patch("jarvis.core.tools.subprocess.run")
+    @patch("mike.core.tools.subprocess.run")
     def test_gh_not_installed(self, mock_run):
         mock_run.side_effect = FileNotFoundError("gh not found")
         result = create_pr("Test PR")
         assert "not installed" in result.lower()
 
-    @patch("jarvis.core.tools.subprocess.run")
+    @patch("mike.core.tools.subprocess.run")
     def test_not_authenticated(self, mock_run):
         def side_effect(cmd, **kwargs):
             r = MagicMock()
@@ -104,7 +104,7 @@ class TestCreatePRExecution:
         result = create_pr("Test PR")
         assert "authenticated" in result.lower() or "auth" in result.lower()
 
-    @patch("jarvis.core.tools.subprocess.run")
+    @patch("mike.core.tools.subprocess.run")
     def test_on_main_branch(self, mock_run):
         def side_effect(cmd, **kwargs):
             r = MagicMock()
@@ -121,7 +121,7 @@ class TestCreatePRExecution:
         result = create_pr("Test PR")
         assert "cannot create pr" in result.lower() or "feature branch" in result.lower()
 
-    @patch("jarvis.core.tools.subprocess.run")
+    @patch("mike.core.tools.subprocess.run")
     def test_successful_pr_creation(self, mock_run):
         call_count = [0]
 
@@ -144,7 +144,7 @@ class TestCreatePRExecution:
         assert "https://github.com" in result
         assert "42" in result
 
-    @patch("jarvis.core.tools.subprocess.run")
+    @patch("mike.core.tools.subprocess.run")
     def test_draft_flag_passed(self, mock_run):
         captured_cmds = []
 
@@ -168,7 +168,7 @@ class TestCreatePRExecution:
         assert pr_cmd, "gh pr create was not called"
         assert "--draft" in pr_cmd[0]
 
-    @patch("jarvis.core.tools.subprocess.run")
+    @patch("mike.core.tools.subprocess.run")
     def test_pr_already_exists(self, mock_run):
         def side_effect(cmd, **kwargs):
             r = MagicMock()

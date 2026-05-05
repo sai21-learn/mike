@@ -1,6 +1,6 @@
 # RAG Optimization Techniques
 
-This document covers advanced techniques for improving Retrieval-Augmented Generation (RAG) quality in Jarvis.
+This document covers advanced techniques for improving Retrieval-Augmented Generation (RAG) quality in Mike.
 
 ## Overview
 
@@ -32,10 +32,10 @@ Stage 2: Cross-Encoder Reranking (slow, accurate)
     Query + Each Candidate → Relevance Score → Top 5
 ```
 
-**How it works in Jarvis:**
+**How it works in Mike:**
 
 ```python
-# jarvis/knowledge/rag.py
+# mike/knowledge/rag.py
 
 class Reranker:
     """Cross-encoder reranker using sentence-transformers."""
@@ -124,10 +124,10 @@ final_score = rrf_score(bm25_rank) + rrf_score(vector_rank)
 - Vectors find "PHP framework expert" for same query
 - Combined: "What is my website" matches both semantically AND the keyword "website"
 
-**Implementation in Jarvis:**
+**Implementation in Mike:**
 
 ```python
-# jarvis/knowledge/rag.py
+# mike/knowledge/rag.py
 
 class SparseEncoder:
     """Simple BM25-style sparse encoder for keyword matching."""

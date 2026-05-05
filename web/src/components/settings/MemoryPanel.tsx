@@ -209,8 +209,8 @@ export function MemoryPanel() {
       </div>
 
       <p className="text-xs text-text-muted">
-        Facts Jarvis has learned about you. These are used to personalize responses.
-        You can also edit <code className="px-1 py-0.5 bg-surface-2 rounded">~/.jarvis/memory/facts.md</code> directly.
+        Facts Mike has learned about you. These are used to personalize responses.
+        You can also edit <code className="px-1 py-0.5 bg-surface-2 rounded">~/.mike/memory/facts.md</code> directly.
       </p>
 
       {/* Error display */}

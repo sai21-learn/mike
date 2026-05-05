@@ -2,7 +2,7 @@
 
 // === Assistant Branding (Configurable) ===
 export interface AssistantConfig {
-  name: string              // "Jarvis", "Friday", "Alfred", etc.
+  name: string              // "Mike", "Friday", "Alfred", etc.
   greeting: string          // "Good morning" / custom
   avatar?: string           // Custom avatar URL
   accentColor?: string      // Theme accent color

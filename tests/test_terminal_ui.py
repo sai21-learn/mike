@@ -4,7 +4,7 @@ import pytest
 from unittest.mock import MagicMock, patch
 from io import StringIO
 
-from jarvis.ui.terminal import TerminalUI, VALID_COMMANDS, _JarvisCompleter
+from mike.ui.terminal import TerminalUI, VALID_COMMANDS, _MikeCompleter
 
 
 # ──────────────────────────────────────────────
@@ -32,7 +32,7 @@ class TestCommandRegistration:
 
     @pytest.mark.parametrize("cmd", NEW_COMMANDS)
     def test_completer_includes(self, cmd):
-        assert cmd in _JarvisCompleter.COMMANDS
+        assert cmd in _MikeCompleter.COMMANDS
 
 
 # ──────────────────────────────────────────────
@@ -73,8 +73,8 @@ class TestPrintPermissions:
 
     def test_permissions_table(self, ui):
         """Prints a table with all tools."""
-        from jarvis.core.permissions import PermissionManager
-        pm = PermissionManager(config_dir="/tmp/jarvis_test_perms")
+        from mike.core.permissions import PermissionManager
+        pm = PermissionManager(config_dir="/tmp/mike_test_perms")
         ui.print_permissions(pm)
         assert ui.console.print.call_count >= 2  # Table + hint
 

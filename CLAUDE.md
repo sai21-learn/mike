@@ -4,7 +4,7 @@ This file provides guidance for Claude Code when working with this repository.
 
 ## Project Overview
 
-Jarvis is a local-first personal AI assistant powered by Ollama. It provides a privacy-respecting, self-hosted alternative to cloud-based AI assistants with support for multiple models, tool execution, persistent memory, switchable personas, a web UI, and voice input.
+Mike is a local-first personal AI assistant powered by Ollama. It provides a privacy-respecting, self-hosted alternative to cloud-based AI assistants with support for multiple models, tool execution, persistent memory, switchable personas, a web UI, and voice input.
 
 It can also support Ollama cloud models, OpenAI, Anthropic and so on. Subject to implementation.
 
@@ -20,7 +20,7 @@ It can also support Ollama cloud models, OpenAI, Anthropic and so on. Subject to
 ## Directory Structure
 
 ```
-jarvis/                  # Python backend package
+mike/                  # Python backend package
 ├── core/               # Agent loop, context, tools, router
 ├── providers/          # LLM provider abstractions (ollama, anthropic, openai, gemini)
 ├── skills/             # Built-in tools (web_search, file_ops, shell, etc.)
@@ -28,7 +28,7 @@ jarvis/                  # Python backend package
 ├── auth/               # Authentication (SQLAlchemy models, email/OAuth, middleware)
 ├── ui/                 # Terminal and FastAPI web server
 ├── voice/              # Voice I/O system
-├── assistant.py        # Main Jarvis class
+├── assistant.py        # Main Mike class
 └── cli.py             # CLI entry point
 
 web/                    # React frontend
@@ -40,7 +40,7 @@ web/                    # React frontend
 └── vite.config.ts
 
 config/                 # Configuration templates
-├── settings.yaml      # Default settings (copied to ~/.jarvis/config/)
+├── settings.yaml      # Default settings (copied to ~/.mike/config/)
 ├── rules.md           # Safety rules
 └── personas/          # Pre-defined personas
 
@@ -53,21 +53,21 @@ docs/                   # Technical documentation
 
 ```bash
 # Run CLI
-jarvis                      # Interactive mode
-jarvis --dev                # Web UI with hot reload
-jarvis --voice              # Voice input mode
-jarvis chat "message"       # Single query
+mike                      # Interactive mode
+mike --dev                # Web UI with hot reload
+mike --voice              # Voice input mode
+mike chat "message"       # Single query
 
 # Setup and configuration
-jarvis setup                # Interactive setup wizard
-jarvis models               # List Ollama models
-jarvis personas             # List personas
+mike setup                # Interactive setup wizard
+mike models               # List Ollama models
+mike personas             # List personas
 
 # Knowledge base (RAG)
-jarvis knowledge add <file>     # Add document
-jarvis knowledge add <dir> -r   # Recursive add
-jarvis knowledge sync           # Sync documents
-jarvis knowledge search <query> # Semantic search
+mike knowledge add <file>     # Add document
+mike knowledge add <dir> -r   # Recursive add
+mike knowledge sync           # Sync documents
+mike knowledge search <query> # Semantic search
 ```
 
 ### Frontend Development
@@ -93,19 +93,19 @@ pip install -e ".[all]"     # All optional dependencies
 
 ### Adding a New Skill
 
-Skills are defined in `jarvis/skills/`. Each skill module exports functions decorated for tool calling. Register new skills in `jarvis/core/tools.py`.
+Skills are defined in `mike/skills/`. Each skill module exports functions decorated for tool calling. Register new skills in `mike/core/tools.py`.
 
 ### Adding a New Provider
 
-Providers extend `BaseProvider` in `jarvis/providers/base.py`. Implement the required methods and register in the provider factory.
+Providers extend `BaseProvider` in `mike/providers/base.py`. Implement the required methods and register in the provider factory.
 
 ### Personas
 
-Personas are markdown files in `config/personas/` or `~/.jarvis/config/personas/`. They define the assistant's personality and behavior.
+Personas are markdown files in `config/personas/` or `~/.mike/config/personas/`. They define the assistant's personality and behavior.
 
 ## Configuration
 
-User configuration lives in `~/.jarvis/config/`:
+User configuration lives in `~/.mike/config/`:
 - `settings.yaml` - Model selection, context limits, integrations
 - `rules.md` - Safety constraints
 - `personas/` - Custom personas
@@ -128,9 +128,9 @@ The system uses `config/rules.md` to define which operations require user confir
 
 - Python 3.13+ is not supported due to dependency conflicts
 - The web UI runs on port 7777 (backend) and 3000 (frontend dev server)
-- Conversation history is stored in `memory/jarvis.db`
+- Conversation history is stored in `memory/mike.db`
 - Vector embeddings are stored in `knowledge/chroma_db/`
-- Auth is optional: `JARVIS_AUTH_ENABLED=true` enables it, `JARVIS_EMAIL_VERIFICATION=false` skips email verify
+- Auth is optional: `MIKE_AUTH_ENABLED=true` enables it, `MIKE_EMAIL_VERIFICATION=false` skips email verify
 - All dependencies are managed via `pyproject.toml` (no requirements.txt)
 
 # Version Control

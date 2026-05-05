@@ -39,11 +39,11 @@ interface UseWakeWordOptions {
 }
 
 /**
- * Wake word detection hook - listens for "Jarvis" or custom keyword
+ * Wake word detection hook - listens for "Mike" or custom keyword
  * Uses continuous browser speech recognition to detect the wake word
  */
 export function useWakeWord({
-  keyword = 'jarvis',
+  keyword = 'mike',
   onWakeWord,
   enabled = true,
 }: UseWakeWordOptions) {

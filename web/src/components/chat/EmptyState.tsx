@@ -32,13 +32,13 @@ const QUICK_ACTIONS = [
   },
 ]
 
-export function EmptyState({ assistantName = 'Jarvis', onQuickAction }: EmptyStateProps) {
+export function EmptyState({ assistantName = 'Mike', onQuickAction }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4">
       {/* Avatar and greeting */}
       <div className="w-20 h-20 rounded-full bg-surface-2/50 flex items-center justify-center mb-5 ring-1 ring-border/30">
         <img
-          src="/jarvis.jpeg"
+          src="/mike.jpeg"
           alt={assistantName}
           className="w-16 h-16 rounded-full object-cover"
         />

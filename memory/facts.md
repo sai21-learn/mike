@@ -1,29 +1,29 @@
 # User Facts
 
 This file is a template. Personal user information should be stored in:
-`~/.jarvis/knowledge/personal/`
+`~/.mike/knowledge/personal/`
 
 ## Setup Personal Knowledge
 
 1. Create your personal knowledge directory:
    ```bash
-   mkdir -p ~/.jarvis/knowledge/personal
+   mkdir -p ~/.mike/knowledge/personal
    ```
 
 2. Add markdown/text files with information about yourself:
    - Your skills and background
-   - Preferences for how Jarvis should respond
+   - Preferences for how Mike should respond
    - Projects you're working on
-   - Any other context you want Jarvis to know
+   - Any other context you want Mike to know
 
 3. Sync to the knowledge base:
    ```bash
-   jarvis knowledge sync --personal
+   mike knowledge sync --personal
    ```
 
 ## Example Personal File
 
-Create `~/.jarvis/knowledge/personal/about_me.md`:
+Create `~/.mike/knowledge/personal/about_me.md`:
 ```markdown
 # About Me
 

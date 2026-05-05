@@ -58,11 +58,11 @@ export function MessageBubble({ message }: MessageBubbleProps) {
             {/* Avatar + name header */}
             <div className="flex items-center gap-2 mb-2">
               <img
-                src="/jarvis.jpeg"
-                alt="Jarvis"
+                src="/mike.jpeg"
+                alt="Mike"
                 className="w-5 h-5 rounded-full object-cover"
               />
-              <span className="text-xs font-medium text-emerald-400">Jarvis</span>
+              <span className="text-xs font-medium text-emerald-400">Mike</span>
               <span className="text-[10px] text-text-muted/50 ml-auto">{timeStr}</span>
             </div>
 

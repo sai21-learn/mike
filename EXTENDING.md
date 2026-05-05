@@ -1,13 +1,13 @@
-# Extending Jarvis
+# Extending Mike
 
-Jarvis is designed to be easily extended. You can add new skills, personas, rules, and more - all without modifying the core code.
+Mike is designed to be easily extended. You can add new skills, personas, rules, and more - all without modifying the core code.
 
 ## Directory Structure
 
-All customizations live in `~/.jarvis/`:
+All customizations live in `~/.mike/`:
 
 ```
-~/.jarvis/
+~/.mike/
 ├── config/
 │   ├── settings.yaml       # Main configuration
 │   ├── rules.md            # Safety rules and constraints
@@ -20,7 +20,7 @@ All customizations live in `~/.jarvis/`:
 ├── memory/
 │   ├── facts.md            # Facts about you
 │   ├── entities.json       # Tracked entities
-│   └── jarvis.db           # Conversation history
+│   └── mike.db           # Conversation history
 └── knowledge/
     ├── documents/          # Documents for RAG
     └── notes/              # Quick notes
@@ -30,27 +30,27 @@ All customizations live in `~/.jarvis/`:
 
 ## Creating Skills
 
-### Method 1: Ask Jarvis
+### Method 1: Ask Mike
 
-Just ask Jarvis to create a skill for you:
+Just ask Mike to create a skill for you:
 
 ```
 You: Create a skill that fetches the current Bitcoin price
 
-Jarvis: I'll create that skill for you...
-[Creates ~/.jarvis/skills/fetch_bitcoin_price.py]
+Mike: I'll create that skill for you...
+[Creates ~/.mike/skills/fetch_bitcoin_price.py]
 
 You: What's the Bitcoin price?
 
-Jarvis: [Uses the new skill] Bitcoin is currently $XX,XXX
+Mike: [Uses the new skill] Bitcoin is currently $XX,XXX
 ```
 
 ### Method 2: Manual Creation
 
-Create a file in `~/.jarvis/skills/`:
+Create a file in `~/.mike/skills/`:
 
 ```python
-# ~/.jarvis/skills/fetch_stock_price.py
+# ~/.mike/skills/fetch_stock_price.py
 """
 Fetch stock prices from Yahoo Finance.
 """
@@ -104,7 +104,7 @@ Available templates for common patterns:
 - **file_processor** - File operations
 - **shell_command** - Shell command wrappers
 
-Ask Jarvis: "Show me the api_fetch skill template"
+Ask Mike: "Show me the api_fetch skill template"
 
 ### Skill Requirements
 
@@ -119,16 +119,16 @@ Ask Jarvis: "Show me the api_fetch skill template"
 
 ## Creating Personas
 
-Personas change how Jarvis behaves and responds.
+Personas change how Mike behaves and responds.
 
 ### Create a Persona
 
-Create `~/.jarvis/config/personas/my_persona.md`:
+Create `~/.mike/config/personas/my_persona.md`:
 
 ```markdown
 # DevOps Engineer
 
-You are Jarvis in DevOps mode - an infrastructure specialist.
+You are Mike in DevOps mode - an infrastructure specialist.
 
 ## Core Traits
 - Infrastructure-first thinking
@@ -161,22 +161,22 @@ You are Jarvis in DevOps mode - an infrastructure specialist.
 ```
 You: /persona devops
 
-Jarvis: Switched to devops persona.
+Mike: Switched to devops persona.
 
 You: How should I deploy this Node.js app?
 
-Jarvis: [Responds with infrastructure-focused advice]
+Mike: [Responds with infrastructure-focused advice]
 ```
 
 ---
 
 ## Customizing Rules
 
-Rules constrain what Jarvis can and cannot do.
+Rules constrain what Mike can and cannot do.
 
 ### Edit Rules
 
-Edit `~/.jarvis/config/rules.md`:
+Edit `~/.mike/config/rules.md`:
 
 ```markdown
 # Rules
@@ -211,11 +211,11 @@ Edit `~/.jarvis/config/rules.md`:
 
 ## Adding Facts
 
-Facts help Jarvis remember things about you.
+Facts help Mike remember things about you.
 
 ### Edit Facts
 
-Edit `~/.jarvis/memory/facts.md`:
+Edit `~/.mike/memory/facts.md`:
 
 ```markdown
 # Facts About Me
@@ -287,10 +287,10 @@ integrations:
 
 ## Adding Documents (RAG)
 
-Place documents in `~/.jarvis/knowledge/documents/`:
+Place documents in `~/.mike/knowledge/documents/`:
 
 ```
-~/.jarvis/knowledge/documents/
+~/.mike/knowledge/documents/
 ├── project-readme.md
 ├── api-docs.md
 ├── meeting-notes/
@@ -300,7 +300,7 @@ Place documents in `~/.jarvis/knowledge/documents/`:
     └── style-guide.md
 ```
 
-Jarvis will index these and use them to answer questions.
+Mike will index these and use them to answer questions.
 
 ---
 
@@ -354,7 +354,7 @@ def my_skill(param1: str, param2: int = 10) -> dict:
 1. **Skills should be focused** - One skill, one job
 2. **Always handle errors** - Return `{"success": False, "error": "message"}`
 3. **Document parameters** - Clear descriptions help the AI use skills correctly
-4. **Test locally first** - Run the function manually before using with Jarvis
+4. **Test locally first** - Run the function manually before using with Mike
 5. **Keep personas focused** - Each persona should have a clear purpose
 6. **Update facts regularly** - Keep your facts current for better personalization
 
@@ -368,9 +368,9 @@ def my_skill(param1: str, param2: int = 10) -> dict:
 - Check file permissions
 
 ### Persona not working
-- Verify file is in `~/.jarvis/config/personas/`
+- Verify file is in `~/.mike/config/personas/`
 - Check markdown syntax
-- Restart Jarvis after adding
+- Restart Mike after adding
 
 ### Rules not applied
 - Rules are guidance, not hard enforcement
