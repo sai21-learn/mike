@@ -83,6 +83,8 @@ try:
     HAS_PROMPT_TOOLKIT = True
 except ImportError:
     HAS_PROMPT_TOOLKIT = False
+    class Lexer: pass
+    class Completer: pass
 
 # Valid commands for highlighting
 VALID_COMMANDS = {

@@ -586,11 +586,56 @@ def _launch_dev(port: int):
         click.echo("Done.")
 
 
-def _launch_voice_mode():
+# ============== Voice Mode Commands ==============
+
+@main.group(invoke_without_command=True)
+@click.pass_context
+def voice(ctx):
+    """Manage voice mode and audio devices."""
+    if ctx.invoked_subcommand is None:
+        _launch_voice_mode()
+
+
+@voice.command("list")
+def voice_list():
+    """List available audio input devices."""
+    try:
+        from .voice.voice_mode import list_audio_devices
+        list_audio_devices()
+    except ImportError:
+        click.echo("Voice dependencies not installed.")
+        click.echo("Install with: pip install mike-ai-assistant[voice]")
+
+
+@voice.command("set")
+@click.argument("device_id", type=int)
+def voice_set(device_id):
+    """Set the preferred audio input device ID."""
+    from .assistant import load_config, save_config
+    import sounddevice as sd
+
+    try:
+        device_info = sd.query_devices(device_id)
+        if device_info['max_input_channels'] == 0:
+            click.echo(f"Error: Device {device_id} is not an input device.")
+            return
+
+        config = load_config()
+        if "voice" not in config:
+            config["voice"] = {}
+        config["voice"]["input_device"] = device_id
+        save_config(config)
+
+        click.echo(f"✓ Preferred microphone set to: {device_info['name']} (ID: {device_id})")
+    except Exception as e:
+        click.echo(f"Error setting device: {e}")
+
+
+def _launch_voice_mode(device_id: int = None):
     """Launch voice input mode."""
     try:
-        from .voice import run_voice_mode
-        run_voice_mode()
+        from .voice.voice_mode import run_voice_mode
+        run_voice_mode(device_id=device_id)
     except ImportError:
         click.echo("Voice dependencies not installed.")
         click.echo("Install with: pip install mike-ai-assistant[voice]")

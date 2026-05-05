@@ -191,6 +191,14 @@ class ProjectContext:
 class Mike:
     """Main assistant with tool calling."""
 
+    # Persona-specific instructions
+    PERSONA_PROMPTS = {
+        "coder": "PERSONA: CODER MODE\n- Focus on writing clean, efficient, and well-documented code.\n- Follow industry best practices (SOLID, DRY).\n- Always provide context for code changes.\n- If the project has a MIKE.md or CLAUDE.md, follow its coding standards strictly.",
+        "researcher": "PERSONA: RESEARCHER MODE\n- Be thorough and academic in your approach.\n- Cite sources and provide evidence for claims.\n- Break down complex topics into digestible sections.\n- Focus on objective analysis and data-driven insights.",
+        "creative": "PERSONA: CREATIVE MODE\n- Be imaginative, expressive, and metaphorical.\n- Help with brainstorming, world-building, and artistic concepts.\n- Use a more vibrant and engaging tone.\n- Don't be afraid to suggest unconventional ideas.",
+        "planner": "PERSONA: PLANNER MODE\n- Focus on productivity and organizational strategies.\n- Help break down large tasks into small, actionable steps.\n- Be structured and encouraging.\n- Suggest tools or workflows that improve efficiency.",
+    }
+
     def __init__(self, ui: TerminalUI = None, working_dir: Path = None):
         self.ui = ui or TerminalUI()
 
@@ -358,8 +366,32 @@ class Mike:
             "- Only refuse truly harmful requests (instructions to cause harm, illegal activities).",
             "- Never lecture or moralize.",
             "- Never use em dash (\u2014) in your responses.",
-            "",
-            "CODE RULES:",
+        ])
+
+        # Add persona-specific instructions
+        if self.current_persona != "default":
+            persona_prompt = self.PERSONA_PROMPTS.get(self.current_persona)
+            if persona_prompt:
+                lines.append("")
+                lines.append(persona_prompt)
+            else:
+                # Try to load from custom file
+                try:
+                    persona_file = get_data_dir() / "config" / "personas" / f"{self.current_persona}.yaml"
+                    if persona_file.exists():
+                        import yaml
+                        with open(persona_file, "r") as f:
+                            custom_persona = yaml.safe_load(f)
+                            if isinstance(custom_persona, dict) and "prompt" in custom_persona:
+                                lines.append("")
+                                lines.append(f"PERSONA: {self.current_persona.upper()} MODE")
+                                lines.append(custom_persona["prompt"])
+                except Exception:
+                    pass
+
+        lines.append("")
+        lines.append("CODE RULES:")
+        lines.extend([
             "1. NEVER make up or generate fake code. NEVER hallucinate.",
             "2. ALWAYS use tools FIRST to read actual files before answering.",
             "3. When asked about code: use read_file or search_files FIRST.",
