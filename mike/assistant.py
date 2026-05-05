@@ -199,6 +199,7 @@ class Mike:
 
         # Load global config
         self.config = load_config()
+        self.current_persona = self.config.get("assistant", {}).get("persona", "default")
 
         # Load PROJECT context (from working directory, NOT mike dir)
         # intentionally quiet during startup
@@ -1177,3 +1178,24 @@ def run_cli(reasoning_level: str = None):
 
 if __name__ == "__main__":
     run_cli()
+
+def list_personas() -> list[str]:
+    """List available personas."""
+    data_dir = get_data_dir()
+    persona_dir = data_dir / "config" / "personas"
+    
+    # Start with built-ins
+    personas = ["default", "coder", "researcher", "creative", "planner"]
+    
+    # Add custom personas from directory
+    if persona_dir.exists():
+        for p_file in persona_dir.glob("*.yaml"):
+            name = p_file.stem
+            if name not in personas:
+                personas.append(name)
+        for p_file in persona_dir.glob("*.yml"):
+            name = p_file.stem
+            if name not in personas:
+                personas.append(name)
+    
+    return sorted(personas)

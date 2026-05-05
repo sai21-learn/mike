@@ -48,7 +48,10 @@ def run_voice_mode():
         console.print(f"[red]Failed to initialize: {e}[/red]")
         sys.exit(1)
 
-    console.print(f"[dim]Persona: {mike.current_persona} | Model: {mike.ollama.default_model}[/dim]\n")
+    # Use current persona and model info
+    persona = getattr(mike, 'current_persona', 'default')
+    model_name = getattr(mike.provider, 'model', 'unknown')
+    console.print(f"[dim]Persona: {persona} | Model: {model_name}[/dim]\n")
 
     sample_rate = 16000
     duration = 5  # seconds to record

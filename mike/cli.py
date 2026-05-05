@@ -271,13 +271,20 @@ def models():
 @click.argument('name')
 def persona(name):
     """Switch to a different persona."""
-    from .assistant import Mike, list_personas
+    from .assistant import Mike, list_personas, save_config, load_config
 
     available = list_personas()
     if name not in available:
         click.echo(f"Unknown persona: {name}")
         click.echo(f"Available: {', '.join(available)}")
         return
+
+    # Save to config
+    config = load_config()
+    if "assistant" not in config:
+        config["assistant"] = {}
+    config["assistant"]["persona"] = name
+    save_config(config)
 
     click.echo(f"Persona set to: {name}")
     click.echo("This will take effect in the next session.")
